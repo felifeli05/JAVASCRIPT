@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      text-align: center;
+    }
+
+    .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 5px;
+      border: none;
+      }
+      .button:hover {
+      transform: scale(1.1);
+    
+    }
+
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .red { background-color: pink; color: #fff; }
+    .light-blue { background-color: lightblue; color: #fff; }
+    .blue { background-color: skyblue; color: #fff; }
+    .green { background-color: #008080; color: #fff; }
+    .reset { background-color: gray; color: #fff; }
+  </style>
+</head>
+
+<body>
+  <h1>
+    INTERACTIVE BUTTONS
+  </h1>
+
+  <input class="button red" id="alertButton1" value="1st Button" readonly onclick="alert(firstnum);">
+</input>
+<input class="button light-blue" id="alertButton2" value="2nd Button" readonly onclick="alert(secondnum);">
+</input>
+<input class="button blue" id="colorButtonBlue" value="blue" readonly onclick="document.body.style.backgroundColor = 'skyblue';">
+</input>
+<input class="button green" id="colorButtonGreen" value="green" readonly onclick="document.body.style.backgroundColor = '#008080';">
+<input class="button reset" id="alertButton3" value="Reset Background Color" readonly onclick="alert('Reset Background Color');document.body.style.backgroundColor = 'white';"></input>
+
+
+  <script>
+    var firstnum = promptForNumber("Please enter your first number");
+    var secondnum = promptForNumber("Please enter your second number");
+
+    function promptForNumber(message) {
+      var input = prompt(message);
+      
+      while (isNaN(input)) {
+        alert("Please enter a valid number.");
+        input = prompt(message);
+      }
+      return parseFloat(input);
+    }
+
+    if (!isNaN(firstnum) && !isNaN(secondnum)) {
+      if (firstnum > secondnum) {
+        document.body.style.backgroundColor = 'lightblue';
+        displayResult(firstnum, secondnum, "First input < Second input");
+      } else if (secondnum > firstnum) {
+        document.body.style.backgroundColor = 'orange';
+        displayResult(firstnum, secondnum, "Second input > First input");
+      } else {
+        document.body.style.backgroundColor = 'lightyellow';
+        displayResult(firstnum, secondnum, "Second input == First input");
+      }
+    }
+
+    function displayResult(first, second) {
+      var resultElement = document.createElement('div');
+      resultElement.className = 'result';
+      resultElement.style.textAlign = 'center';  
+
+      if (first < second) {
+        resultElement.textContent = `${first} < ${second}`;
+      } else if (first > second) {
+        resultElement.textContent = `${first} > ${second}`;
+      } else {
+        resultElement.textContent = `${first} == ${second}`;
+      }
+
+      document.body.appendChild(resultElement);
+    }
+
+    function resetBackgroundColor() {
+      document.body.style.backgroundColor = 'white';
+      removeResult();
+    }
+
+    function removeResult() {
+      var resultElement = document.querySelector('.result');
+      if (resultElement) {
+        resultElement.parentNode.removeChild(resultElement);
+      }
+    }
+  </script>
+</body>
+</html>
